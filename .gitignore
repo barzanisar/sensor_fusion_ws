@@ -35,4 +35,7 @@
 .vscode
 *.code-workspace
 
+# Build directories
+build
+
 
