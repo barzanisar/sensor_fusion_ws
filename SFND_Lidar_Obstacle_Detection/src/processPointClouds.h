@@ -50,6 +50,6 @@ public:
     std::vector<boost::filesystem::path> streamPcd(const std::string &dataPath);
 
 private:
-    void fillCluster(typename pcl::PointCloud<PointT>::Ptr cloud, const uint index, KdTree *const &tree, const float distanceTol, std::vector<bool> &processed, std::vector<uint> &cluster);
+    void FillCluster(typename pcl::PointCloud<PointT>::Ptr cloud, const uint index, KdTree *const &tree, const float distanceTol, std::vector<bool> &processed, typename pcl::PointCloud<PointT>::Ptr cluster);
 };
 #endif /* PROCESSPOINTCLOUDS_H_ */
