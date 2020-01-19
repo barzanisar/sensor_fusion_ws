@@ -4,12 +4,6 @@
 #include "Eigen/Dense"
 #include "measurement_package.h"
 
-enum State {P_X = 0,
-P_Y,
-VEL,
-YAW,
-YAW_D};
-
 class UKF {
  public:
   /**
@@ -94,19 +88,29 @@ class UKF {
   Eigen::VectorXd weights_;
 
   // State dimension
-  int n_x_ = 5;
+  int n_x_;
 
   // Augmented state dimension
-  int n_aug_ = 7;
-
-  // // Radar measurement dimension
-  // static const int n_z_radar_ = 3;
-
-  // // Lidar measurement dimension
-  // static const int n_z_lidar_ = 2;
+  int n_aug_;
 
   // Sigma point spreading parameter
   double lambda_;
+
+  // Measurement covariance
+  Eigen::MatrixXd R_radar_;
+  Eigen::MatrixXd R_lidar_;
+
+  private:
+  // Helper functions for Prediction Step
+  void GenerateSigmaPoints(Eigen::MatrixXd& Xsig_aug);
+  void PredictSigmaPoints(const Eigen::MatrixXd & Xsig_aug, double delta_t);
+  void CalculateMeanAndCovarianceFromSigmaPoints();
+
+  // Helper functions for Update with Radar step
+  void PredictRadarSigmaPointsAndMean(Eigen::MatrixXd& Zsig_pred, Eigen::VectorXd& Zmean_pred);
+  void CalculateRadarInnovationCovariance(const Eigen::MatrixXd& Zsig_pred, const Eigen::VectorXd& Zmean_pred, Eigen::MatrixXd& S);
+  void CalculateRadarT(const Eigen::MatrixXd& Zsig_pred, const Eigen::VectorXd& Zmean_pred, Eigen::MatrixXd& T);
+
 };
 
 #endif  // UKF_H
