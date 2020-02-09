@@ -359,7 +359,7 @@ void UKF::UpdateLidar(const MeasurementPackage &meas_package)
             << S_inv << std::endl
             << "Kalman gain :" << K << std::endl;
 
-  std::cout << "Laser NIS: " << NIS << std::endl;
+  std::cout << "Laser NIS: " << NIS << std::endl; // Laser NIS should be mostly between 0.103 and 5.991 for estimator to be called "consistent" 
 }
 
 void UKF::PredictRadarSigmaPointsAndMean(MatrixXd &Zsig_pred, VectorXd &Zmean_pred)
@@ -491,5 +491,5 @@ void UKF::UpdateRadar(const MeasurementPackage &meas_package)
   std::cout << "Radar S_inv: " << std::endl
             << S_inv << std::endl
             << "Kalman gain :" << K << std::endl;
-  std::cout << "RADAR NIS: " << NIS << std::endl;
+  std::cout << "RADAR NIS: " << NIS << std::endl; // Radar NIS should be mostly between 0.352 and 7.815 for estimator to be called "consistent"
 }
