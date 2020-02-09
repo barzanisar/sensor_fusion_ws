@@ -57,7 +57,7 @@ void loadLidarFromFile(vector<LidarPoint> &lidarPoints, string filename)
     fclose(stream);
 }
 
-void showLidarTopview(std::vector<LidarPoint> &lidarPoints, cv::Size worldSize, cv::Size imageSize, float minX, bool bWait)
+void showLidarTopview(std::vector<LidarPoint> &lidarPoints, cv::Size worldSize, cv::Size imageSize, float minX, bool bWait, int imgIndex)
 {
     // create topview image
     cv::Mat topviewImg(imageSize, CV_8UC3, cv::Scalar(0, 0, 0));
@@ -86,10 +86,15 @@ void showLidarTopview(std::vector<LidarPoint> &lidarPoints, cv::Size worldSize, 
     int yForMinX = (-(minX) * imageSize.height / worldSize.height) + imageSize.height;
     cv::line(topviewImg, cv::Point(0, yForMinX), cv::Point(imageSize.width, yForMinX), cv::Scalar(0, 255, 0));
 
-    // display image
-    string windowName = "Top-View Perspective of LiDAR data";
+    //display image
+    string windowName = "Top-View Perspective of LiDAR data for img " + to_string(imgIndex);
     cv::namedWindow(windowName, 2);
     cv::imshow(windowName, topviewImg);
+    // if (imgIndex == 5 || imgIndex == 6 || imgIndex == 7)
+    // {
+    //     string imgName = string("/home/barza/sensor_fusion_ws/SFND_3D_Object_Tracking/results/lidar_ttc_") + to_string(imgIndex) + string(".png");
+    //     cv::imwrite(imgName,topviewImg);
+    // }
     if (bWait)
     {
         cv::waitKey(0); // wait for key to be pressed
