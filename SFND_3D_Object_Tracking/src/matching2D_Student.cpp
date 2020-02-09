@@ -61,7 +61,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
 
     cout << matcherType << " with " << selectorType << " found " << matches.size() << " matches" << endl;
 
-    if (descSource.type() != CV_8U)
+    if (matcherType.compare("MAT_FLANN") == 0)
     {
         descSource.convertTo(descSource, CV_8U);
         descRef.convertTo(descRef, CV_8U);
